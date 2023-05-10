@@ -5,14 +5,39 @@
 using namespace std;
 
 class Alumno {
-public:
+private:
     string nombre;
     int edad;
     double promedio;
 
+public:
     Alumno(string nombre, int edad, double promedio) {
         this->nombre = nombre;
         this->edad = edad;
+        this->promedio = promedio;
+    }
+
+    string getNombre() const {
+        return nombre;
+    }
+
+    void setNombre(const string& nombre) {
+        this->nombre = nombre;
+    }
+
+    int getEdad() const {
+        return edad;
+    }
+
+    void setEdad(int edad) {
+        this->edad = edad;
+    }
+
+    double getPromedio() const {
+        return promedio;
+    }
+
+    void setPromedio(double promedio) {
         this->promedio = promedio;
     }
 
@@ -34,35 +59,31 @@ public:
     static int size1;
     vector<Alumno> alumnos;
     int cantidad;
-    
+
     Grupo() {
         cantidad = 0;
     }
 
-
     void agregarAlumno(string nombre, int edad, double promedio) {
-        if (size1 > cantidad){
+        if (size1 > cantidad) {
             Alumno nuevoAlumno(nombre, edad, promedio);
             alumnos.push_back(nuevoAlumno);
             cantidad++;
+        } else {
+            cout << "Se ha intentado crear mas de " << size1 << " objetos." << endl;
         }
-
-        else{
-            cout << "Se ha intentado crear mas de "<<size1<<" objetos." <<endl;
-        }
-
     }
 
     void mostrarAlumnos() {
         for (int i = 0; i < cantidad; i++) {
-            cout <<"Nommbre: "<< alumnos[i].nombre << " Edad: " << alumnos[i].edad << " Nota: " << alumnos[i].promedio << endl;
+            cout << "Nommbre: " << alumnos[i].getNombre() << " Edad: " << alumnos[i].getEdad() << " Nota: " << alumnos[i].getPromedio() << endl;
         }
     }
 
     void ordenarPorPromedio() {
         for (int i = 0; i < cantidad; i++) {
             for (int j = i + 1; j < cantidad; j++) {
-                if (alumnos[j].promedio < alumnos[i].promedio) {
+                if (alumnos[j].getPromedio() < alumnos[i].getPromedio()) {
                     swap(alumnos[i], alumnos[j]);
                 }
             }
@@ -72,7 +93,7 @@ public:
     double promedioPromedios() {
         double sumaPromedios = 0.0;
         for (int i = 0; i < cantidad; i++) {
-            sumaPromedios += alumnos[i].promedio;
+            sumaPromedios += alumnos[i].getPromedio();
         }
         return sumaPromedios / cantidad;
     }
@@ -80,7 +101,7 @@ public:
     Alumno mejorPromedio() {
         Alumno mejor = alumnos[0];
         for (int i = 1; i < cantidad; i++) {
-            if (alumnos[i].promedio > mejor.promedio) {
+            if (alumnos[i].getPromedio() > mejor.getPromedio()) {
                 mejor = alumnos[i];
             }
         }
@@ -88,7 +109,7 @@ public:
     }
 };
 
-int Grupo::size1 =5;
+int Grupo::size1 = 5;
 
 int main() {
     Grupo grupo;
@@ -104,14 +125,12 @@ int main() {
     cout <<"====================================="<< endl;
     grupo.ordenarPorPromedio();
     cout << "Alumnos ordenados por promedio: " << endl;
-    for (int i = 0; i < grupo.cantidad; i++) {
-        cout << grupo.alumnos[i];
-    }
+    grupo.mostrarAlumnos();
     cout <<"====================================="<< endl;
     cout << "Promedio de todos los promedios: "<< grupo.promedioPromedios() << endl;
 
     Alumno mejorPromedio = grupo.mejorPromedio();
-    cout << "Mejor promedio: "<< endl <<"Nombre: " << mejorPromedio.nombre << " Edad: " << mejorPromedio.edad << " Nota: " << mejorPromedio.promedio<<endl;
+    cout << "Mejor promedio: "<< endl <<"Nombre: " << mejorPromedio.getNombre() << " Edad: " << mejorPromedio.getEdad() << " Nota: " << mejorPromedio.getPromedio()<<endl;
 
     return 0;
 }
