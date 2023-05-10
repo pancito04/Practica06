@@ -31,17 +31,26 @@ bool operator<(const Alumno& alumno1, const Alumno& alumno2) {
 
 class Grupo {
 public:
+    static int size1;
     vector<Alumno> alumnos;
     int cantidad;
-
+    
     Grupo() {
         cantidad = 0;
     }
 
+
     void agregarAlumno(string nombre, int edad, double promedio) {
-        Alumno nuevoAlumno(nombre, edad, promedio);
-        alumnos.push_back(nuevoAlumno);
-        cantidad++;
+        if (size1 > cantidad){
+            Alumno nuevoAlumno(nombre, edad, promedio);
+            alumnos.push_back(nuevoAlumno);
+            cantidad++;
+        }
+
+        else{
+            cout << "Se ha intentado crear mas de "<<size1<<" objetos." <<endl;
+        }
+
     }
 
     void mostrarAlumnos() {
@@ -79,12 +88,15 @@ public:
     }
 };
 
+int Grupo::size1 =5;
+
 int main() {
     Grupo grupo;
     grupo.agregarAlumno("Juan", 18, 17);
     grupo.agregarAlumno("Guchi", 19, 11);
     grupo.agregarAlumno("Luis", 20, 14);
     grupo.agregarAlumno("Kikin", 18, 16);
+    grupo.agregarAlumno("Chorosor",19,19);
     grupo.agregarAlumno("Juli0", 19, 19);
 
     cout << "Alumnos: " << endl<<"====================================="<< endl;
@@ -103,4 +115,3 @@ int main() {
 
     return 0;
 }
-
